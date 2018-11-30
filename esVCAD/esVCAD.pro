@@ -81,16 +81,16 @@ FORMS += \
         mainwindow.ui
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../3rd/dxf/MinGW_Win32/lib/release/ -ldxf
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../3rd/dxf/MinGW_Win32/lib/debug/ -ldxf
-else:unix: LIBS += -L$$PWD/../../3rd/dxf/MinGW_Win32/lib/ -ldxf
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../3rd/dxf/MinGW_Win32/lib/release/ -ldxf
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../3rd/dxf/MinGW_Win32/lib/debug/ -ldxf
+else:unix: LIBS += -L$$PWD/../3rd/dxf/MinGW_Win32/lib/ -ldxf
 
-INCLUDEPATH += $$PWD/../../3rd/dxf/MinGW_Win32/lib/debug
-DEPENDPATH += $$PWD/../../3rd/dxf/MinGW_Win32/lib/debug
+INCLUDEPATH += $$PWD/../3rd/dxf/MinGW_Win32/lib/release
+DEPENDPATH += $$PWD/../3rd/dxf/MinGW_Win32/lib/release
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../3rd/tinyspline/MinGW_Win32/lib/release/ -ltinyspline
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../3rd/tinyspline/MinGW_Win32/lib/debug/ -ltinyspline
-else:unix: LIBS += -L$$PWD/../../3rd/tinyspline/MinGW_Win32/lib/ -ltinyspline
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../3rd/tinyspline/MinGW_Win32/lib/release/ -ltinyspline
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../3rd/tinyspline/MinGW_Win32/lib/debug/ -ltinyspline
+else:unix: LIBS += -L$$PWD/../3rd/tinyspline/MinGW_Win32/lib/ -ltinyspline
 
-INCLUDEPATH += $$PWD/../../3rd/tinyspline/MinGW_Win32/lib/debug
-DEPENDPATH += $$PWD/../../3rd/tinyspline/MinGW_Win32/lib/debug
+INCLUDEPATH += $$PWD/../3rd/tinyspline/MinGW_Win32/lib/release
+DEPENDPATH += $$PWD/../3rd/tinyspline/MinGW_Win32/lib/release
