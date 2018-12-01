@@ -35,7 +35,6 @@ enum EntityType
     RayType,
     CoordXYType,
     Face3dType,
-    BlockType,
     Total
 
 };

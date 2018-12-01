@@ -53,7 +53,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QString m_sFileName;
-    EntityContainer m_entities;
+    std::vector<Block*>  m_blocks;
     Rect m_coordRange;
     QPoint m_dragBeginPoint;
     QPoint m_dragEndPoint;
@@ -61,7 +61,7 @@ private:
 private:
     void ParseDxf(const string &fileName);
     void DeleteEntities();
-    void ShowEntities(EntityContainer &entities);
+    void ShowEntities(std::vector<Block*> &blocks);
 };
 
 #endif // MAINWINDOW_H

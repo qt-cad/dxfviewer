@@ -88,7 +88,7 @@ void GraphicsFrame::DrawCoordXy(QPainter& painter,int w,int h)
     painter.setPen(pen);
     painter.drawLine(centerX+100,centerY,w+1,centerY);
 }
-void GraphicsFrame::PaintEntities(EntityContainer & entities)
+void GraphicsFrame::PaintEntities(std::vector<Block*>& blocks)
 {
     int width = this->width();
     int height = this->height();
@@ -96,9 +96,9 @@ void GraphicsFrame::PaintEntities(EntityContainer & entities)
     QPainter painter(&m_Image);
     ClearWindow(painter,width,height);
     DrawCoordXy(painter,width,height);
-    for(int i=0;i<entities.size();++i)
+    for(int i=0;i<blocks.size();++i)
     {
-        entities[i]->Draw(painter);
+        blocks[i]->Draw(painter);
     }
     this->update();
 }

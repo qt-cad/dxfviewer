@@ -3,7 +3,7 @@
 #include "point.h"
 namespace Entities
 {
-class Block:public Entity
+class Block
 {
 public:
     Block();
@@ -26,6 +26,8 @@ private:
     int m_rows;//块数组y索引,未使用
     double m_colSp;//x边缘间距,未使用
     double m_rowSp;//y边缘间距,未使用
+    bool m_isUse;
+    Attributes m_attributes;
 private:
     EntityContainer m_entities;
 public:
@@ -38,27 +40,32 @@ public:
     int GetRows()const{return m_rows;}
     double GetColSp()const{return m_colSp;}
     double GetRowSp()const{return m_rowSp;}
+    bool IsUse()const{return m_isUse;}
+    const Attributes GetAttributes()const{return m_attributes;}
 
     void SetName(const std::string &name){ m_name=name;}
     void SetInsertPoint(const Point& insertPoint){ m_insertPoint=insertPoint;}
     void SetScalePoint(const Point& scalePoint){ m_scalePoint=scalePoint;}
     void SetAngle(double angle){ m_angle=angle;}
-
+    void SetIsUse(bool bUse){m_isUse=bUse;}
     void SetCols(int cols){ m_cols=cols;}
     void SetRows(int rows){ m_rows=rows;}
     void SetColSp(double colSp){m_colSp=colSp;}
     void SetRowSp(double rowSp){m_rowSp=rowSp;}
+    void SetAttributes(const Attributes &attributes){m_attributes=attributes;}
     bool IsEmpty(){return m_entities.size()==0;}
+    int  GetElementSize()const{return m_entities.size();}
+    Entity* ElementAt(int index)const{return m_entities[index];}
     void push_back(Entity* entity){m_entities.push_back(entity);}
+    Entity* operator[](int index){return m_entities[index];}
 public:
-    virtual EntityType GetType(){return EntityType::BlockType;}
-    virtual void Draw(QPainter& painter);
-    virtual Entity* Clone();
-    virtual void Transform(double*params,int size=9);
-    virtual void Scale(double ratio);
-    virtual void Transfer(double dx,double dy,double dz);
-    virtual void Rotate(double angle,double cx,double cy,double cz);
-    virtual const std::string  ToString(){return "Block";}
+    void Draw(QPainter& painter);
+    Block* Clone();
+    void Transform(double*params,int size=9);
+    void Scale(double ratio);
+    void Transfer(double dx,double dy,double dz);
+    void Rotate(double angle,double cx,double cy,double cz);
+    const std::string  ToString(){return "Block";}
 };
 
 }

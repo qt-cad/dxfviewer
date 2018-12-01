@@ -34,12 +34,12 @@ public:
     virtual void addBlock(const DL_BlockData& data);
     virtual void endBlock();
 private:
-    EntityContainer m_entities;
+    std::vector<Block*> m_blocks;
     Entities::Attributes m_attributes;
     //bool m_bFindExtMinOrMax;
     std::vector<double> m_extMinAndMax;
 public:
-    EntityContainer &GetEntities() {return m_entities;}
+    std::vector<Block*> &GetEntities() {return m_blocks;}
     Rect  GetCoordRange();//得到dxf的坐标范围
 private:
     Attributes& GetAttributes();

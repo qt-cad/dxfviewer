@@ -29,22 +29,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::DeleteEntities()
 {
-     EntityContainer::iterator it=m_entities.begin();
-     for(;it!=m_entities.end();++it){
+     std::vector<Block*>::iterator it=m_blocks.begin();
+     for(;it!=m_blocks.end();++it){
          delete *it;
          *it=NULL;
      }
-     m_entities.clear();
+     m_blocks.clear();
 }
 
-void MainWindow::ShowEntities(EntityContainer &entities)
+void MainWindow::ShowEntities(std::vector<Block*> &blocks)
 {
 
     ui->listWidgetEntities->clear();
-    for(int i=0;i<entities.size();++i)
+    for(int i=0;i<blocks.size();++i)
     {
-        QString s=QString::fromStdString(entities[i]->ToString());
-        ui->listWidgetEntities->addItem(s);
+        Block *block=blocks[i];
+        if(!block->IsEmpty())
+        {
+            for(int k=0;k<block->GetElementSize();++k)
+            {
+                QString s=QString::fromStdString(block->ElementAt(k)->ToString());
+                ui->listWidgetEntities->addItem(s);
+            }
+        }
+
+
     }
 }
 void MainWindow::ParseDxf(const string &fileName)
@@ -59,8 +68,8 @@ void MainWindow::ParseDxf(const string &fileName)
     else
     {
         DeleteEntities();
-        EntityContainer entities=dxf_creationClass.GetEntities();
-        ShowEntities(entities);
+        std::vector<Block*> blocks=dxf_creationClass.GetEntities();
+        ShowEntities(blocks);
         m_coordRange=dxf_creationClass.GetCoordRange();
         //进行坐标转换
         int width=ui->m_graphicsFrame->width();
@@ -72,14 +81,18 @@ void MainWindow::ParseDxf(const string &fileName)
 
         double params[5]={scale,height,leftTop.GetX(),leftTop.GetY(),width};
 
-        int count=entities.size();
+        int count=blocks.size();
         for(int i=0;i<count;++i)
         {
-            Entity *entity=entities[i]->Clone();
-            entity->Transform(params,5);
-            m_entities.push_back(entity);
+            Block *block=blocks[i]->Clone();
+            if(!block->IsEmpty())
+            {
+                block->Transform(params,5);
+                m_blocks.push_back(block);
+            }
+
         }
-        ui->m_graphicsFrame->PaintEntities(m_entities);
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
 
     }
 }
@@ -117,67 +130,67 @@ void MainWindow::on_pushButtonShowEntities_clicked()
 void MainWindow::on_pushButtonMoveRight_clicked()
 {
     int dx=20;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Transfer(dx,0.0,0.0);
+        m_blocks[i]->Transfer(dx,0.0,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveLeft_clicked()
 {
     int dx=-20;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Transfer(dx,0.0,0.0);
+        m_blocks[i]->Transfer(dx,0.0,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveUp_clicked()
 {
     int dy=-20;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Transfer(0.0,dy,0.0);
+        m_blocks[i]->Transfer(0.0,dy,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveDown_clicked()
 {
     int dy=20;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Transfer(0.0,dy,0.0);
+        m_blocks[i]->Transfer(0.0,dy,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonZoomOut_clicked()
 {
     double scale=2;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Scale(scale);
+        m_blocks[i]->Scale(scale);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonZoomIn_clicked()
 {
     double scale=0.5;
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Scale(scale);
+        m_blocks[i]->Scale(scale);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
@@ -193,13 +206,13 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
         Point leftTop(m_coordRange.GetLeftTop());
         double params[4]={scale,height,leftTop.GetX(),leftTop.GetY()};
 
-        int count=m_entities.size();
+        int count=m_blocks.size();
         for(int i=0;i<count;++i)
         {
-            Entity *entity=m_entities[i];
-            entity->Transform(params,4);
+            Block *block=m_blocks[i];
+            block->Transform(params,4);
         }
-        ui->m_graphicsFrame->PaintEntities(m_entities);
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
     }
 
 }
@@ -211,12 +224,12 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
            m_dragEndPoint=event->pos();
            int dx=m_dragEndPoint.x()-m_dragBeginPoint.x();
            int dy=m_dragEndPoint.y()-m_dragBeginPoint.y();
-           int count=m_entities.size();
+           int count=m_blocks.size();
            for(int i=0;i<count;++i)
            {
-               m_entities[i]->Transfer(dx,dy,0.0);
+               m_blocks[i]->Transfer(dx,dy,0.0);
            }
-           ui->m_graphicsFrame->PaintEntities(m_entities);
+           ui->m_graphicsFrame->PaintEntities(m_blocks);
            m_dragBeginPoint=m_dragEndPoint;
     }
 }
@@ -248,14 +261,14 @@ void MainWindow::wheelEvent(QWheelEvent*event)
         scale=0.9;
     }
 
-    int count=m_entities.size();
+    int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
-        m_entities[i]->Transfer(-m_scaleBasePoint.x(),-m_scaleBasePoint.y(),0.0);
-        m_entities[i]->Scale(scale);
-        m_entities[i]->Transfer(m_scaleBasePoint.x(),m_scaleBasePoint.y(),0.0);
+        m_blocks[i]->Transfer(-m_scaleBasePoint.x(),-m_scaleBasePoint.y(),0.0);
+        m_blocks[i]->Scale(scale);
+        m_blocks[i]->Transfer(m_scaleBasePoint.x(),m_scaleBasePoint.y(),0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_entities);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)

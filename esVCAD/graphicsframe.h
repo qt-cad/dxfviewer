@@ -3,7 +3,7 @@
 #include <QFrame>
 #include <QImage>
 #include <QWheelEvent>
-#include <entities/entity.h>
+#include <entities/block.h>
 #include <entities/rect.h>
 using namespace  Entities;
 class GraphicsFrame : public QFrame
@@ -24,7 +24,7 @@ private:
  private:
      QImage m_Image;
  public:
-     void PaintEntities(EntityContainer & entities);
+     void PaintEntities(std::vector<Block*> & blocks);
      void ClearWindow(QPainter& painter,int w,int h);
      void DrawCoordXy(QPainter& painter,int w,int h);
 };
