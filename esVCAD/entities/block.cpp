@@ -9,7 +9,8 @@ Block::Block():
     m_rows(0),
     m_colSp(0.0),
     m_rowSp(0.0),
-    m_isUse(false)
+    m_isUse(false),
+    m_bEndBlock(false)
 {
 
 }
@@ -31,6 +32,7 @@ Block::Block(const std::string&name,
     m_colSp=colSp;
     m_rowSp=rowSp;
     m_isUse=false;
+    m_bEndBlock=false;
 }
 
 Block::Block(const Block& block)
@@ -43,7 +45,8 @@ Block::Block(const Block& block)
     m_rows=block.GetRows();
     m_colSp=block.GetColSp();
     m_rowSp=block.GetRowSp();
-    m_isUse=false;
+    m_isUse=block.IsUse();
+    m_bEndBlock=block.IsEndBlock();
     for(int k=0;k<block.GetElementSize();++k)
     {
         m_entities.push_back(block.ElementAt(k)->Clone());
@@ -103,6 +106,20 @@ void Block::Transfer(double dx,double dy,double dz)
 void Block::Rotate(double angle,double cx,double cy,double cz)
 {
 
+}
+
+void Block::CorrectCoord()
+{
+    for(int i=0;i<m_entities.size();++i)
+    {
+         m_entities[i]->CorrectCoord(m_insertPoint.GetX(),
+                                     m_insertPoint.GetY(),
+                                     m_insertPoint.GetZ(),
+                                     m_scalePoint.GetX(),
+                                     m_scalePoint.GetY(),
+                                     m_scalePoint.GetZ(),
+                                     m_angle);
+    }
 }
 
 }

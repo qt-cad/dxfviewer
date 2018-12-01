@@ -68,8 +68,7 @@ void MainWindow::ParseDxf(const string &fileName)
     else
     {
         DeleteEntities();
-        std::vector<Block*> blocks=dxf_creationClass.GetEntities();
-        ShowEntities(blocks);
+        std::vector<Block*> blocks=dxf_creationClass.GetBlocks();
         m_coordRange=dxf_creationClass.GetCoordRange();
         //进行坐标转换
         int width=ui->m_graphicsFrame->width();
@@ -84,14 +83,15 @@ void MainWindow::ParseDxf(const string &fileName)
         int count=blocks.size();
         for(int i=0;i<count;++i)
         {
-            Block *block=blocks[i]->Clone();
-            if(!block->IsEmpty())
+            if(!blocks[i]->IsEmpty()&&blocks[i]->IsUse())
             {
+                Block *block=blocks[i]->Clone();
                 block->Transform(params,5);
                 m_blocks.push_back(block);
             }
 
         }
+        ShowEntities(m_blocks);
         ui->m_graphicsFrame->PaintEntities(m_blocks);
 
     }

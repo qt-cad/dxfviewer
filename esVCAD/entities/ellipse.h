@@ -44,6 +44,13 @@ public:
     virtual void Rotate(double angle,double cx,double cy,double cz);
     virtual EntityType GetType(){return EntityType::EllipseType;}
     virtual const std::string  ToString(){return "Ellipse";}
+    virtual void CorrectCoord(double bx,
+                              double by,
+                              double bz,
+                              double sx,
+                              double sy,
+                              double sz,
+                              double rotaAngle);
 public:
     void SetCenter(const Point& center){m_center=center;}
     const Point& GetCenter()const{return m_center;}

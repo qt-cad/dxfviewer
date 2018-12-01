@@ -23,6 +23,13 @@ public:
     virtual void Transfer(double dx,double dy,double dz);
     virtual void Rotate(double angle,double cx,double cy,double cz);
     virtual const std::string  ToString(){return "Rect";}
+    virtual void CorrectCoord(double bx,
+                              double by,
+                              double bz,
+                              double sx,
+                              double sy,
+                              double sz,
+                              double rotaAngle);
 public:
     const Point &GetLeftTop()const{return m_leftTop;}
     const Point &GetRightBottom()const{return m_rightBottom;}

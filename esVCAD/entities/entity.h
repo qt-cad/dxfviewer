@@ -93,6 +93,14 @@ public:
     }
     virtual const DrawState  GetDrawState()const{return m_drawState;}
     virtual void SetDrawState(DrawState drawState){m_drawState= drawState;}
+    //处理插入块的坐标
+    virtual void CorrectCoord(double bx,
+                              double by,
+                              double bz,
+                              double sx,
+                              double sy,
+                              double sz,
+                              double rotaAngle){}
 protected:
     Attributes  m_attributes;
     DrawState  m_drawState;

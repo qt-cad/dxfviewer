@@ -39,10 +39,13 @@ private:
     //bool m_bFindExtMinOrMax;
     std::vector<double> m_extMinAndMax;
 public:
-    std::vector<Block*> &GetEntities() {return m_blocks;}
+    std::vector<Block*> &GetBlocks() {return m_blocks;}
     Rect  GetCoordRange();//得到dxf的坐标范围
 private:
     Attributes& GetAttributes();
+    //插入到Paper_Space0块
+    void InsertInToPs0Block(Entity*entity);
+    Block* FindBlockByName(const std::string& name);
 };
 
 #endif

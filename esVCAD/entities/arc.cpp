@@ -82,6 +82,20 @@ void Arc::Rotate(double angle,double cx,double cy,double cz)
 {
 
 }
+void Arc:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+   m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+   m_radius*=sx;
+   double angle=rotaAngle/PI*180;
+   m_startAngle+=angle;
+   m_endAngle+=angle;
+}
 
 }
 

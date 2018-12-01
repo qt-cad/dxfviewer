@@ -32,6 +32,13 @@ public:
     virtual void Transfer(double dx,double dy,double dz);
     virtual void Rotate(double angle,double cx,double cy,double cz);
     virtual const std::string  ToString(){return "Point";}
+    virtual void CorrectCoord(double bx,
+                              double by,
+                              double bz,
+                              double sx,
+                              double sy,
+                              double sz,
+                              double rotaAngle);
 public:
     void SetX(double x){m_x=x;}
     double GetX() const{return m_x;}

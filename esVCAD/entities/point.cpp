@@ -166,5 +166,25 @@ void Point::Rotate(double angle,double cx,double cy,double cz)
     m_drawableX=(m_drawableX-cx)*cosVal-(m_drawableY-cy)*sinVal+cx;
     m_drawableY=(m_drawableY-cy)*cosVal+(m_drawableX-cx)*sinVal+cy;
 }
+void Point::CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+    double sinValue=sin(rotaAngle);
+    double cosValue=cos(rotaAngle);
+    m_x*=sx;
+    m_y*=sy;
+    m_z*=sz;
+    double newX0 =m_x*cosValue-m_y*sinValue;
+    double newY0 =m_x*sinValue+m_y*cosValue;
+    //double newZ0 =m_x*sinValue+m_y*cosValue;
+    m_x=newX0+bx;
+    m_y=newY0+by;
+    m_z+=bz;
+}
 
 }

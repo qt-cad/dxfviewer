@@ -76,5 +76,16 @@ void Circle::Rotate(double angle,double cx,double cy,double cz)
 {
 
 }
+void Circle:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+    m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_radius*=sx;
+}
 
 }

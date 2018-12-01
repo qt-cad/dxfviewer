@@ -75,8 +75,14 @@ void Dxf_CreationClass::addPoint(const DL_PointData& data)
         Entity * pt=new Point(data.x,data.y,data.z);
         pt->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(pt);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(pt);
+        }
+        else
+        {
+            InsertInToPs0Block(pt);
+        }
     }
 
 
@@ -93,8 +99,14 @@ void Dxf_CreationClass::addLine(const DL_LineData& data)
         Entity * line=new Line(p1,p2);
         line->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(line);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(line);
+        }
+        else
+        {
+            InsertInToPs0Block(line);
+        }
     }
 }
 
@@ -108,8 +120,14 @@ void Dxf_CreationClass::addArc(const DL_ArcData& data)
         Entity * arc=new Arc(center,data.radius,data.angle1,data.angle2);
         arc->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(arc);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(arc);
+        }
+        else
+        {
+            InsertInToPs0Block(arc);
+        }
     }
 }
 
@@ -123,8 +141,14 @@ void Dxf_CreationClass::addCircle(const DL_CircleData& data)
         Entity * circle=new Circle(center,data.radius);
         circle->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(circle);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(circle);
+        }
+        else
+        {
+            InsertInToPs0Block(circle);
+        }
     }
 }
 
@@ -139,8 +163,14 @@ void Dxf_CreationClass::addEllipse(const DL_EllipseData& data)
         Entity * ellipse=new Ellipse(center,majorPos,data.ratio,data.angle1,data.angle2);
         ellipse->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(ellipse);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(ellipse);
+        }
+        else
+        {
+            InsertInToPs0Block(ellipse);
+        }
     }
 }
 
@@ -157,8 +187,14 @@ void Dxf_CreationClass::addPolyline(const DL_PolylineData& data)
                                       data.elevation);
         polyline->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(polyline);
-
+        if(!block->IsEndBlock())
+        {
+            block->push_back(polyline);
+        }
+        else
+        {
+            InsertInToPs0Block(polyline);
+        }
     }
 }
 
@@ -170,6 +206,12 @@ void Dxf_CreationClass::addVertex(const DL_VertexData& data)
     if(size>0)
     {
         Block* block=m_blocks[size-1];
+        if(block->IsEndBlock())
+        {
+            block=FindBlockByName("*Paper_Space0");
+            block->SetIsUse(true);
+        }
+        if(block==NULL)return;
         if(!block->IsEmpty())
         {
             Entity* elemEntity=block->ElementAt(block->GetElementSize()-1);
@@ -181,7 +223,6 @@ void Dxf_CreationClass::addVertex(const DL_VertexData& data)
                 polyline->AddVertex(vertex);
             }
         }
-
     }
 }
 
@@ -200,7 +241,14 @@ void Dxf_CreationClass::add3dFace(const DL_3dFaceData& data)
         Entity *face3d=new Face3d(pts,data.thickness);
         face3d->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(face3d);
+        if(!block->IsEndBlock())
+        {
+            block->push_back(face3d);
+        }
+        else
+        {
+            InsertInToPs0Block(face3d);
+        }
     }
 
 }
@@ -214,7 +262,14 @@ void Dxf_CreationClass::addXLine(const DL_XLineData& data)
                                 Point(data.dx,data.dy,data.dz));
         xLine->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(xLine);
+        if(!block->IsEndBlock())
+        {
+            block->push_back(xLine);
+        }
+        else
+        {
+            InsertInToPs0Block(xLine);
+        }
     }
 }
 //射线
@@ -227,7 +282,14 @@ void Dxf_CreationClass::addRay(const DL_RayData& data)
                             Point(data.dx,data.dy,data.dz));
         ray->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(ray);
+        if(!block->IsEndBlock())
+        {
+            block->push_back(ray);
+        }
+        else
+        {
+            InsertInToPs0Block(ray);
+        }
     }
 }
 //样条曲线
@@ -247,7 +309,14 @@ void Dxf_CreationClass::addSpline(const DL_SplineData& data)
                                    endPoint);
         spline->SetAttributes(GetAttributes());
         Block* block=m_blocks[size-1];
-        block->push_back(spline);
+        if(!block->IsEndBlock())
+        {
+            block->push_back(spline);
+        }
+        else
+        {
+            InsertInToPs0Block(spline);
+        }
     }
 }
 //控制点
@@ -257,6 +326,12 @@ void Dxf_CreationClass::addControlPoint(const DL_ControlPointData& data)
     if(size>0)
     {
         Block* block=m_blocks[size-1];
+        if(block->IsEndBlock())
+        {
+            block=FindBlockByName("*Paper_Space0");
+            block->SetIsUse(true);
+        }
+        if(block==NULL)return;
         if(!block->IsEmpty())
         {
             Entity* elemEntity=block->ElementAt(block->GetElementSize()-1);
@@ -267,6 +342,7 @@ void Dxf_CreationClass::addControlPoint(const DL_ControlPointData& data)
                 controlPt.SetAttributes(GetAttributes());
                 spline->AddControlPts(dynamic_cast<Point*>(controlPt.Clone()));
             }
+
         }
 
 
@@ -279,6 +355,12 @@ void Dxf_CreationClass::addFitPoint(const DL_FitPointData& data)
     if(size>0)
     {
         Block* block=m_blocks[size-1];
+        if(block->IsEndBlock())
+        {
+            block=FindBlockByName("*Paper_Space0");
+            block->SetIsUse(true);
+        }
+        if(block==NULL)return;
         if(!block->IsEmpty())
         {
             Entity* elemEntity=block->ElementAt(block->GetElementSize()-1);
@@ -290,27 +372,27 @@ void Dxf_CreationClass::addFitPoint(const DL_FitPointData& data)
                 spline->AddFitPts(dynamic_cast<Point*>(fitPt.Clone()));
             }
         }
-
-
     }
 }
 //节点矢量
 void Dxf_CreationClass::addKnot(const DL_KnotData& data)
 {
     int size=m_blocks.size();
-    if(size>0)
+    Block* block=m_blocks[size-1];
+    if(block->IsEndBlock())
     {
-        Block* block=m_blocks[size-1];
-        if(!block->IsEmpty())
+        block=FindBlockByName("*Paper_Space0");
+        block->SetIsUse(true);
+    }
+    if(block==NULL)return;
+    if(!block->IsEmpty())
+    {
+        Entity* elemEntity=block->ElementAt(block->GetElementSize()-1);
+        if(elemEntity->GetType()==EntityType::SplineType)
         {
-            Entity* elemEntity=block->ElementAt(block->GetElementSize()-1);
-            if(elemEntity->GetType()==EntityType::SplineType)
-            {
-                Spline *spline=dynamic_cast<Spline*>(elemEntity);
-                spline->AddKnots(data.k);
-            }
+            Spline *spline=dynamic_cast<Spline*>(elemEntity);
+            spline->AddKnots(data.k);
         }
-
     }
 }
 
@@ -320,23 +402,23 @@ void Dxf_CreationClass::endEntity()
 }
 void Dxf_CreationClass::addInsert(const DL_InsertData& data)
 {
-    int size=m_blocks.size();
-    if(size>0)
+    Block *block=FindBlockByName(data.name);
+    if(block!=NULL)
     {
-        Block* block=m_blocks[size-1];
-        block->SetName(data.name);
-        block->SetInsertPoint(Point(data.ipx,data.ipy,data.ipz));
-        block->SetAngle(data.angle);
-        block->SetScalePoint(Point(data.sx,data.sy,data.sz));
-        block->SetCols(data.cols);
-        block->SetRows(data.rows);
-        block->SetColSp(data.colSp);
-        block->SetRowSp(data.rowSp);
-        block->SetIsUse(true);
-        block->SetAttributes(GetAttributes());
-
+        Block* cloneBlock=block->Clone();
+        cloneBlock->SetName(data.name);
+        cloneBlock->SetInsertPoint(Point(data.ipx,data.ipy,data.ipz));
+        cloneBlock->SetAngle(data.angle/180.0*PI);
+        cloneBlock->SetScalePoint(Point(data.sx,data.sy,data.sz));
+        cloneBlock->SetCols(data.cols);
+        cloneBlock->SetRows(data.rows);
+        cloneBlock->SetColSp(data.colSp);
+        cloneBlock->SetRowSp(data.rowSp);
+        cloneBlock->SetIsUse(true);
+        cloneBlock->SetAttributes(GetAttributes());
+        cloneBlock->CorrectCoord();//对块内的图元进行坐标变换
+        m_blocks.push_back(cloneBlock);
     }
-
 }
 void Dxf_CreationClass::addBlock(const DL_BlockData& data)
 {
@@ -349,7 +431,35 @@ void Dxf_CreationClass::addBlock(const DL_BlockData& data)
 
 void Dxf_CreationClass::endBlock()
 {
+    int size=m_blocks.size();
+    if(size>0)
+    {
+        Block* block=m_blocks[size-1];
+        block->SetIsEndBlock(true);
+    }
+}
 
+void Dxf_CreationClass::InsertInToPs0Block(Entity*entity)
+{
+    Block*block=FindBlockByName("*Paper_Space0");
+    if(block!=NULL)
+    {
+        block->push_back(entity);
+        block->SetIsUse(true);
+    }
+}
+
+Block* Dxf_CreationClass::FindBlockByName(const std::string& name)
+{
+    Block* block=NULL;
+    for(int i=0;i<m_blocks.size();++i)
+    {
+        if(m_blocks[i]->GetName()==name)
+        {
+            block=m_blocks[i];
+            break;
+        }
+    }
 }
 Entities::Attributes& Dxf_CreationClass::GetAttributes() {
     m_attributes.layer_name=attributes.getLayer();//QString::fromStdString(attributes.getLayer());

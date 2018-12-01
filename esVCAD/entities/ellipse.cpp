@@ -151,8 +151,8 @@ void Ellipse::Transform(double*params,int size)
 
     CalAB();
 
-    int majorPosXFlag=m_majorPos.GetX()-m_center.GetX();
-    int majorPosYFlag=m_majorPos.GetY()-m_center.GetY();
+    int majorPosXFlag=round(m_majorPos.GetX()-m_center.GetX());
+    int majorPosYFlag=round(m_majorPos.GetY()-m_center.GetY());
     if((majorPosXFlag==0&&majorPosYFlag!=0)
             ||(majorPosXFlag!=0&&majorPosYFlag==0))
     {
@@ -226,6 +226,18 @@ void Ellipse::Transfer(double dx,double dy,double dz)
 void Ellipse::Rotate(double angle,double cx,double cy,double cz)
 {
 
+}
+
+void Ellipse:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+   m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+   m_majorPos.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
 }
 
 }

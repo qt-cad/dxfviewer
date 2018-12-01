@@ -88,4 +88,15 @@ void CoordXY::Rotate(double angle,double cx,double cy,double cz)
 
 }
 
+void CoordXY:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+
+}
+
 }

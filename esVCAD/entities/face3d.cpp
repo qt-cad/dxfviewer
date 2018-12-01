@@ -68,5 +68,18 @@ void Face3d::Rotate(double angle,double cx,double cy,double cz)
 {
 
 }
+void Face3d:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+    for(int i=0;i<4;++i)
+    {
+        m_pts[i].CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    }
+}
 
 }

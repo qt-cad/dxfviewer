@@ -72,5 +72,15 @@ bool Rect::IsPtInRect(const Point& pt)
     }
     return false;
 }
+void Rect:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+
+}
 
 }

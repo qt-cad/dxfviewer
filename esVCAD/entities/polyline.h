@@ -28,6 +28,13 @@ public:
     virtual void Transfer(double dx,double dy,double dz);
     virtual void Rotate(double angle,double cx,double cy,double cz);
     virtual const std::string  ToString(){return "Polyline";}
+    virtual void CorrectCoord(double bx,
+                              double by,
+                              double bz,
+                              double sx,
+                              double sy,
+                              double sz,
+                              double rotaAngle);
 public:
     const std::vector<Point*>& GetVertexes() const;
     void  AddVertex(Point& vertex);

@@ -108,5 +108,15 @@ void XLine::Rotate(double angle,double cx,double cy,double cz)
 {
 
 }
+void XLine:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+   m_basePoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+}
 
 }

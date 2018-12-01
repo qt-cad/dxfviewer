@@ -28,6 +28,7 @@ private:
     double m_rowSp;//y边缘间距,未使用
     bool m_isUse;
     Attributes m_attributes;
+    bool m_bEndBlock;
 private:
     EntityContainer m_entities;
 public:
@@ -41,6 +42,7 @@ public:
     double GetColSp()const{return m_colSp;}
     double GetRowSp()const{return m_rowSp;}
     bool IsUse()const{return m_isUse;}
+    bool IsEndBlock()const{return m_bEndBlock;}
     const Attributes GetAttributes()const{return m_attributes;}
 
     void SetName(const std::string &name){ m_name=name;}
@@ -48,6 +50,7 @@ public:
     void SetScalePoint(const Point& scalePoint){ m_scalePoint=scalePoint;}
     void SetAngle(double angle){ m_angle=angle;}
     void SetIsUse(bool bUse){m_isUse=bUse;}
+    void SetIsEndBlock(bool bEndBlock){m_bEndBlock=bEndBlock;}
     void SetCols(int cols){ m_cols=cols;}
     void SetRows(int rows){ m_rows=rows;}
     void SetColSp(double colSp){m_colSp=colSp;}
@@ -58,6 +61,8 @@ public:
     Entity* ElementAt(int index)const{return m_entities[index];}
     void push_back(Entity* entity){m_entities.push_back(entity);}
     Entity* operator[](int index){return m_entities[index];}
+public:
+    void CorrectCoord();//矫正块内图元的坐标，包括偏移，比例和角度
 public:
     void Draw(QPainter& painter);
     Block* Clone();

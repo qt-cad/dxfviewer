@@ -112,5 +112,16 @@ void Line:: wheelEvent(QWheelEvent*event)
 {
 
 }
+void Line:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+   m_startPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+   m_endPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+}
 
 }

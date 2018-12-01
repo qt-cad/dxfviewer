@@ -200,6 +200,19 @@ void Spline::ExportSpline()
     }
 
 }
+void Spline:: CorrectCoord(double bx,
+                          double by,
+                          double bz,
+                          double sx,
+                          double sy,
+                          double sz,
+                          double rotaAngle)
+{
+     for(int i=0;i<m_controlPts.size();++i)
+     {
+         m_controlPts[i]->CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+     }
+}
 
 }
 
