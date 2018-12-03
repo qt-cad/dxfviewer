@@ -11,7 +11,6 @@ Layer::Layer(const std::string& name,int flags,bool off)
 
 Layer::~Layer()
 {
-    DELETE_OBJS(m_entities);
 }
 
 }

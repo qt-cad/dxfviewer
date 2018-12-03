@@ -511,6 +511,10 @@ Rect  Dxf_CreationClass::GetCoordRange()
         Point rightBottom(m_extMinAndMax[3],m_extMinAndMax[4],m_extMinAndMax[5]);
         return Rect(leftTop,rightBottom);
     }
+    else
+    {
+        return Rect();
+    }
 }
 
 // EOF
