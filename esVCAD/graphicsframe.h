@@ -5,6 +5,7 @@
 #include <QWheelEvent>
 #include <entities/block.h>
 #include <entities/rect.h>
+#include<entities/coordxy.h>
 using namespace  Entities;
 class GraphicsFrame : public QFrame
 {
@@ -24,9 +25,7 @@ private:
  private:
      QImage m_Image;
  public:
-     void PaintEntities(std::vector<Block*> & blocks);
-     void ClearWindow(QPainter& painter,int w,int h);
-     void DrawCoordXy(QPainter& painter,int w,int h);
+     void PaintEntities(std::vector<Block*> & blocks,CoordXY &coordXY);
 };
 
 #endif // GRAPHICSFRAME_H

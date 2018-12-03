@@ -3,7 +3,7 @@
 
 #include "include/dxf/dl_creationadapter.h"
 #include"entities/block.h"
-#include <entities/rect.h>
+#include <entities/coordxy.h>
 #include <entities/layer.h>
 using namespace Entities;
 
@@ -43,7 +43,7 @@ private:
 public:
     std::vector<Block*> &GetBlocks() {return m_blocks;}
     std::vector<Layer*> &GetLayers() {return m_layers;}
-    Rect  GetCoordRange();//得到dxf的坐标范围
+    CoordXY  GetCoordRange();//得到dxf的坐标范围
 private:
     Attributes& GetAttributes();
     //插入到Paper_Space0块

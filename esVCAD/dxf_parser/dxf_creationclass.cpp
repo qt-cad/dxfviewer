@@ -497,17 +497,17 @@ Entities::Attributes& Dxf_CreationClass::GetAttributes() {
     m_attributes.line_type=attributes.getLinetype();//QString::fromStdString(attributes.getLinetype());
     return m_attributes;
 }
-Rect  Dxf_CreationClass::GetCoordRange()
+CoordXY  Dxf_CreationClass::GetCoordRange()
 {
     if(m_extMinAndMax.size()==6)
     {
         Point leftTop(m_extMinAndMax[0],m_extMinAndMax[1],m_extMinAndMax[2]);
         Point rightBottom(m_extMinAndMax[3],m_extMinAndMax[4],m_extMinAndMax[5]);
-        return Rect(leftTop,rightBottom);
+        return CoordXY(leftTop,rightBottom);
     }
     else
     {
-        return Rect();
+        return CoordXY();
     }
 }
 

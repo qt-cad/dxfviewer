@@ -11,6 +11,10 @@ public:
     CoordXY(const Point &leftTop,double width,double height);
     CoordXY(const Point &leftTop, const Point &rightBottom);
     CoordXY(const CoordXY& coordXY);
+private:
+    Point m_origin;//原点
+    int m_maxX;
+    int m_maxY;
 public:
     virtual EntityType GetType(){return EntityType::CoordXYType;}
     virtual void Draw(QPainter& painter);

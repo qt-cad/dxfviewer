@@ -55,7 +55,7 @@ private:
     QString m_sFileName;
     std::vector<Block*>  m_blocks;
     std::vector<Layer*>  m_layers;
-    Rect m_coordRange;
+    CoordXY m_coordXY;
     QPoint m_dragBeginPoint;
     QPoint m_dragEndPoint;
     QPoint m_scaleBasePoint;
