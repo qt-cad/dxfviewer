@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    DeleteEntities();
     delete ui;
 }
 
@@ -74,16 +75,18 @@ void MainWindow::ParseDxf(const string &fileName)
         double yScale=m_coordRange.GetHeihgt()/height;
         double scale=std::max(xScale,yScale);
         Point leftTop(m_coordRange.GetLeftTop());
-
         double params[5]={scale,height,leftTop.GetX(),leftTop.GetY(),width};
 
-        int count=blocks.size();
-        for(int i=0;i<count;++i)
+        for(int i=0;i<layers.size();++i)
+        {
+            m_layers.push_back(layers[i]->Clone());
+        }
+        for(int i=0;i<blocks.size();++i)
         {
             if(!blocks[i]->IsEmpty()&&blocks[i]->IsUse())
             {
                 Block *block=blocks[i]->Clone();
-                block->Transform(layers,params,5);
+                block->Transform(m_layers,params,5);
                 m_blocks.push_back(block);
             }
 
