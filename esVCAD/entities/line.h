@@ -38,15 +38,15 @@ public:
     void SetEndPoint(const Point& point){m_endPoint=point;}
     const Point& GetEndPoint() const{return m_endPoint;}
 public:
-     virtual void mouseDoubleClickEvent(QMouseEvent *event);
-     virtual void mouseMoveEvent(QMouseEvent *event);
-     virtual void mousePressEvent(QMouseEvent *event);
-     virtual void mouseReleaseEvent(QMouseEvent *event);
-     virtual void wheelEvent(QWheelEvent*event);
-     virtual void dragEnterEvent(QDragEnterEvent *event);
-     virtual void dragMoveEvent(QDragMoveEvent *event);
-     virtual void dragLeaveEvent(QDragLeaveEvent *event);
-     virtual void dropEvent(QDropEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void wheelEvent(QWheelEvent*event);
+    virtual void dragEnterEvent(QDragEnterEvent *event);
+    virtual void dragMoveEvent(QDragMoveEvent *event);
+    virtual void dragLeaveEvent(QDragLeaveEvent *event);
+    virtual void dropEvent(QDropEvent *event);
 };
 
 }

@@ -160,7 +160,7 @@ void Ellipse::Transform(double*params,int size)
         double rotaAngle=0.0;
         if(majorPosXFlag==0&&majorPosYFlag>0)
         {
-           rotaAngle=PI*0.5;
+            rotaAngle=PI*0.5;
         }
         else if(majorPosXFlag==0&&majorPosYFlag<0)
         {
@@ -229,15 +229,15 @@ void Ellipse::Rotate(double angle,double cx,double cy,double cz)
 }
 
 void Ellipse:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                            double by,
+                            double bz,
+                            double sx,
+                            double sy,
+                            double sz,
+                            double rotaAngle)
 {
-   m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
-   m_majorPos.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_majorPos.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
 }
 
 }

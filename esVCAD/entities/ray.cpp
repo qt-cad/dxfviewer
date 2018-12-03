@@ -56,14 +56,14 @@ void Ray::ExportRay()
 
 }
 void Ray:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                        double by,
+                        double bz,
+                        double sx,
+                        double sy,
+                        double sz,
+                        double rotaAngle)
 {
-      m_basePoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_basePoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
 }
 
 }

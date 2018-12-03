@@ -56,12 +56,7 @@ Block::Block(const Block& block)
 
 Block::~Block()
 {
-    for(int k=0;k<m_entities.size();++k)
-    {
-        delete m_entities[k];
-        m_entities[k]=NULL;
-    }
-    m_entities.clear();
+    DELETE_OBJS(m_entities);
 }
 
 void Block::Draw(QPainter& painter)
@@ -90,10 +85,10 @@ void Block::Transform(std::vector<Layer*>& layers,double*params,int size)
     m_scalePoint.Transform(params,size);
     for(int i=0;i<m_entities.size();++i)
     {
-        m_entities[i]->Transform(params,size);
         std::string layerName=m_entities[i]->GetAttributes().layer_name;
         Layer *layer=FindLayerByName(layerName,layers);
         m_entities[i]->SetLayer(layer);
+        m_entities[i]->Transform(params,size);
     }
 }
 Layer*Block::FindLayerByName(std::string& name,std::vector<Layer*>& layers)

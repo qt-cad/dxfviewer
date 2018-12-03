@@ -25,12 +25,12 @@ void GraphicsFrame::paintEvent( QPaintEvent* event )
 //鼠标事件
 void GraphicsFrame::mouseDoubleClickEvent(QMouseEvent *event)
 {
-      event->ignore();
+    event->ignore();
 }
 
 void GraphicsFrame::mouseMoveEvent(QMouseEvent *event)
 {
-      event->ignore();
+    event->ignore();
 }
 
 void GraphicsFrame::mousePressEvent(QMouseEvent *event)

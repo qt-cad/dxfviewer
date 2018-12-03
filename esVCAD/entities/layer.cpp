@@ -19,26 +19,26 @@ Layer::~Layer()
 
 Layer::Layer(const Layer &layer)
 {
-   m_name=layer.GetName();
-   m_flags=layer.GetFlags();
-   m_off=layer.IsOff();
+    m_name=layer.GetName();
+    m_flags=layer.GetFlags();
+    m_off=layer.IsOff();
 }
 
 Layer& Layer::operator=(const Layer&layer)
 {
-      if(&layer!=this)
-      {
-          m_name=layer.GetName();
-          m_flags=layer.GetFlags();
-          m_off=layer.IsOff();
-      }
-      return *this;
+    if(&layer!=this)
+    {
+        m_name=layer.GetName();
+        m_flags=layer.GetFlags();
+        m_off=layer.IsOff();
+    }
+    return *this;
 }
 
 Layer* Layer::Clone()
 {
-     Layer *layer=new Layer(*this);
-     return layer;
+    Layer *layer=new Layer(*this);
+    return layer;
 }
 
 }

@@ -4,8 +4,8 @@ namespace Entities
 
 XLine::XLine()
 {
- m_xMax=0.0;
- m_yMax=0.0;
+    m_xMax=0.0;
+    m_yMax=0.0;
 }
 
 XLine::~XLine()
@@ -116,7 +116,7 @@ void XLine:: CorrectCoord(double bx,
                           double sz,
                           double rotaAngle)
 {
-   m_basePoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_basePoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
 }
 
 }

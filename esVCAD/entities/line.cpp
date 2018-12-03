@@ -29,14 +29,14 @@ Line::~Line()
 void Line::Draw(QPainter& painter)
 {
 
-       QPen pen;
-       pen.setColor(Qt::white);
-       pen.setWidth(2);
-       pen.setStyle(Qt::SolidLine);
-       painter.setPen(pen);
-       QPoint p1(round(m_startPoint.GetDrawableX()),round(m_startPoint.GetDrawableY()));
-       QPoint p2(m_endPoint.GetDrawableX(),m_endPoint.GetDrawableY());
-       painter.drawLine(p1,p2);
+    QPen pen;
+    pen.setColor(Qt::white);
+    pen.setWidth(2);
+    pen.setStyle(Qt::SolidLine);
+    painter.setPen(pen);
+    QPoint p1(round(m_startPoint.GetDrawableX()),round(m_startPoint.GetDrawableY()));
+    QPoint p2(m_endPoint.GetDrawableX(),m_endPoint.GetDrawableY());
+    painter.drawLine(p1,p2);
 }
 
 Entity* Line::Clone()
@@ -47,8 +47,8 @@ Entity* Line::Clone()
 
 void Line::Transform(double*params,int size)
 {
-      m_startPoint.Transform(params,size);
-      m_endPoint.Transform(params,size);
+    m_startPoint.Transform(params,size);
+    m_endPoint.Transform(params,size);
 }
 
 void Line::Scale(double ratio)
@@ -113,15 +113,15 @@ void Line:: wheelEvent(QWheelEvent*event)
 
 }
 void Line:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                         double by,
+                         double bz,
+                         double sx,
+                         double sy,
+                         double sz,
+                         double rotaAngle)
 {
-   m_startPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
-   m_endPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_startPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    m_endPoint.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
 }
 
 }

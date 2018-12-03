@@ -76,13 +76,13 @@ Point& Point::operator =(const Point&pt)
 bool Point::operator ==(const Point&pt)
 {
     if(m_x==pt.GetX()
-       &&m_y==pt.GetY()
-       &&m_z==pt.GetZ()
-       &&m_bulge==pt.GetBulge()
-       &&m_drawableX==pt.GetDrawableX()
-       &&m_drawableY==pt.GetDrawableY()
-       &&m_drawableZ==pt.GetDrawableZ()
-       )
+            &&m_y==pt.GetY()
+            &&m_z==pt.GetZ()
+            &&m_bulge==pt.GetBulge()
+            &&m_drawableX==pt.GetDrawableX()
+            &&m_drawableY==pt.GetDrawableY()
+            &&m_drawableZ==pt.GetDrawableZ()
+            )
     {
         return true;
     }
@@ -106,11 +106,11 @@ void Point::Draw(QPainter& painter)
     }
     else
     {
-       painter.save();
-       QBrush brush(Qt::white);
-       painter.setBrush(brush);
-       painter.drawEllipse(round(m_drawableX-m_ptRadius),round(m_drawableY-m_ptRadius),d,d);
-       painter.restore();
+        painter.save();
+        QBrush brush(Qt::white);
+        painter.setBrush(brush);
+        painter.drawEllipse(round(m_drawableX-m_ptRadius),round(m_drawableY-m_ptRadius),d,d);
+        painter.restore();
     }
 
 }
@@ -126,14 +126,14 @@ void Point::Transform(double*params,int size)
     if(size>=4)
     {
 
-      double scale=params[0];
-      double yMax=params[1];
-      double dx=params[2];
-      double dy=params[3];
-      m_drawableX=(m_x-dx)/scale;
-      m_drawableY=yMax-((m_y-dy)/scale);
-      m_drawableZ=(m_z-dx)/scale;
-      //m_ptRadius=m_ptRadius/scale;
+        double scale=params[0];
+        double yMax=params[1];
+        double dx=params[2];
+        double dy=params[3];
+        m_drawableX=(m_x-dx)/scale;
+        m_drawableY=yMax-((m_y-dy)/scale);
+        m_drawableZ=(m_z-dx)/scale;
+        //m_ptRadius=m_ptRadius/scale;
     }
 }
 
@@ -167,12 +167,12 @@ void Point::Rotate(double angle,double cx,double cy,double cz)
     m_drawableY=(m_drawableY-cy)*cosVal+(m_drawableX-cx)*sinVal+cy;
 }
 void Point::CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                         double by,
+                         double bz,
+                         double sx,
+                         double sy,
+                         double sz,
+                         double rotaAngle)
 {
     double sinValue=sin(rotaAngle);
     double cosValue=cos(rotaAngle);

@@ -11,13 +11,13 @@ typedef std::vector<Entities::Entity*> EntityContainer;
 
 #define DELETE_OBJS(entities)  \
     for(int i=0;i<entities.size();++i)\
-    {                          \
-        if(entities[i])        \
-        {                      \
-            delete entities[i];\
-            entities[i]=NULL;  \
-        }                      \
-    }                          \
+{                          \
+    if(entities[i])        \
+{                      \
+    delete entities[i];\
+    entities[i]=NULL;  \
+}                      \
+}                          \
     entities.clear();
 
 //图元类型

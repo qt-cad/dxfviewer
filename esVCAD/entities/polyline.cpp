@@ -136,12 +136,12 @@ void Polyline::DeleteObjects()
     DELETE_OBJS(m_vertexes);
 }
 void Polyline:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                             double by,
+                             double bz,
+                             double sx,
+                             double sy,
+                             double sz,
+                             double rotaAngle)
 {
     for(int i=0;i<m_vertexes.size();++i)
     {

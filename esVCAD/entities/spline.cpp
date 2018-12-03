@@ -137,13 +137,13 @@ void Spline:: DeleteDrawableObjects()
 
 void Spline::CalXMinMax(std::vector<Point*>&controlPts,double &xMin,double&xMax)
 {
-     std::vector<double> vx;
-     for(int i=0;i<controlPts.size();++i)
-     {
-         vx.push_back(controlPts[i]->GetDrawableX());
-     }
-     xMin=*std::min_element(vx.begin(),vx.end());
-     xMax=*std::max_element(vx.begin(),vx.end());
+    std::vector<double> vx;
+    for(int i=0;i<controlPts.size();++i)
+    {
+        vx.push_back(controlPts[i]->GetDrawableX());
+    }
+    xMin=*std::min_element(vx.begin(),vx.end());
+    xMax=*std::max_element(vx.begin(),vx.end());
 }
 void Spline::ExportSpline()
 {
@@ -201,17 +201,17 @@ void Spline::ExportSpline()
 
 }
 void Spline:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                           double by,
+                           double bz,
+                           double sx,
+                           double sy,
+                           double sz,
+                           double rotaAngle)
 {
-     for(int i=0;i<m_controlPts.size();++i)
-     {
-         m_controlPts[i]->CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
-     }
+    for(int i=0;i<m_controlPts.size();++i)
+    {
+        m_controlPts[i]->CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
+    }
 }
 
 }

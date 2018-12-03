@@ -56,9 +56,9 @@ void Circle::Transform(double*params,int size)
     if(size>0)
     {
 
-      double scale=params[0];
-      m_center.Transform(params,size);
-      m_drawableRadius=m_radius/scale;
+        double scale=params[0];
+        m_center.Transform(params,size);
+        m_drawableRadius=m_radius/scale;
     }
 }
 void Circle::Scale(double ratio)
@@ -77,12 +77,12 @@ void Circle::Rotate(double angle,double cx,double cy,double cz)
 
 }
 void Circle:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                           double by,
+                           double bz,
+                           double sx,
+                           double sy,
+                           double sz,
+                           double rotaAngle)
 {
     m_center.CorrectCoord(bx,by,bz,sx,sy,sz,rotaAngle);
     m_radius*=sx;

@@ -70,7 +70,7 @@ public:
     void Scale(double ratio);
     void Transfer(double dx,double dy,double dz);
     void Rotate(double angle,double cx,double cy,double cz);
-    const std::string  ToString(){return "Block";}   
+    const std::string  ToString(){return "Block";}
     Layer*FindLayerByName(std::string& name,std::vector<Layer*>& layers);
 };
 

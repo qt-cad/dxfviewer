@@ -99,8 +99,8 @@ void MainWindow::on_pushButtonSelFile_clicked()
     QFileDialog *fd=new QFileDialog(this);
     fd->setWindowTitle("请选择dxf文件");
     fd->setNameFilter(tr("dxf(*.dxf)"));
-      if(fd->exec()==QFileDialog::Accepted) // ok
-      {
+    if(fd->exec()==QFileDialog::Accepted) // ok
+    {
         QStringList fileNameLists=fd->selectedFiles();
         if(fileNameLists.size()>0){
             m_sFileName=fileNameLists.at(0);
@@ -109,13 +109,13 @@ void MainWindow::on_pushButtonSelFile_clicked()
             QMessageBox::information(NULL, "dxf选择错误", "请选择dxf文件", QMessageBox::Yes, QMessageBox::Yes);
         }
 
-      }
+    }
 }
 
 void MainWindow::on_pushButtonDxfParse_clicked()
 {
     if(m_sFileName!=""){
-      ParseDxf(m_sFileName.toStdString());
+        ParseDxf(m_sFileName.toStdString());
     }
 }
 
@@ -218,16 +218,16 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons()==Qt::MiddleButton)
     {
-           m_dragEndPoint=event->pos();
-           int dx=m_dragEndPoint.x()-m_dragBeginPoint.x();
-           int dy=m_dragEndPoint.y()-m_dragBeginPoint.y();
-           int count=m_blocks.size();
-           for(int i=0;i<count;++i)
-           {
-               m_blocks[i]->Transfer(dx,dy,0.0);
-           }
-           ui->m_graphicsFrame->PaintEntities(m_blocks);
-           m_dragBeginPoint=m_dragEndPoint;
+        m_dragEndPoint=event->pos();
+        int dx=m_dragEndPoint.x()-m_dragBeginPoint.x();
+        int dy=m_dragEndPoint.y()-m_dragBeginPoint.y();
+        int count=m_blocks.size();
+        for(int i=0;i<count;++i)
+        {
+            m_blocks[i]->Transfer(dx,dy,0.0);
+        }
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
+        m_dragBeginPoint=m_dragEndPoint;
     }
 }
 void MainWindow::mousePressEvent(QMouseEvent *event)
@@ -281,10 +281,10 @@ void MainWindow::dropEvent(QDropEvent *event)
     QList<QUrl> urls = event->mimeData()->urls();
     if(urls.isEmpty())
         return;
-     m_sFileName = urls.first().toLocalFile();
-     if(m_sFileName!=""){
-       ParseDxf(m_sFileName.toStdString());
-     }
+    m_sFileName = urls.first().toLocalFile();
+    if(m_sFileName!=""){
+        ParseDxf(m_sFileName.toStdString());
+    }
 }
 
 void MainWindow::on_listWidgetEntities_clicked(const QModelIndex &index)

@@ -26,9 +26,9 @@ CoordXY::CoordXY(const Point &leftTop, const Point &rightBottom):
 
 CoordXY::CoordXY(const CoordXY& coordXY)
 {
-  m_leftTop=coordXY.GetLeftTop();
-  m_rightBottom=coordXY.GetRightBottom();
-  SetAttributes(coordXY.GetAttributes());
+    m_leftTop=coordXY.GetLeftTop();
+    m_rightBottom=coordXY.GetRightBottom();
+    SetAttributes(coordXY.GetAttributes());
 }
 
 void CoordXY::Draw(QPainter& painter)
@@ -61,8 +61,8 @@ void CoordXY::Draw(QPainter& painter)
 
 Entity* CoordXY:: Clone()
 {
-   Entity *coordXY=new CoordXY(*this);
-   return coordXY;
+    Entity *coordXY=new CoordXY(*this);
+    return coordXY;
 }
 
 void CoordXY::Transform(double*params,int size)
@@ -89,12 +89,12 @@ void CoordXY::Rotate(double angle,double cx,double cy,double cz)
 }
 
 void CoordXY:: CorrectCoord(double bx,
-                          double by,
-                          double bz,
-                          double sx,
-                          double sy,
-                          double sz,
-                          double rotaAngle)
+                            double by,
+                            double bz,
+                            double sx,
+                            double sy,
+                            double sz,
+                            double rotaAngle)
 {
 
 }
