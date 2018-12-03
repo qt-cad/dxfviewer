@@ -68,7 +68,14 @@ void Block::Draw(QPainter& painter)
 {
     for(int i=0;i<m_entities.size();++i)
     {
-          m_entities[i]->Draw(painter);
+        Layer *layer=m_entities[i]->GetLayer();
+        int flags=layer->GetFlags();
+        if(!layer->IsOff()
+                ||flags==4
+                ||flags==0)//图层关闭不显示
+        {
+            m_entities[i]->Draw(painter);
+        }
     }
 }
 
@@ -78,20 +85,33 @@ Block* Block::Clone()
     return block;
 }
 
-void Block::Transform(double*params,int size)
+void Block::Transform(std::vector<Layer*>& layers,double*params,int size)
 {
     m_scalePoint.Transform(params,size);
     for(int i=0;i<m_entities.size();++i)
     {
-          m_entities[i]->Transform(params,size);
+        m_entities[i]->Transform(params,size);
+        std::string layerName=m_entities[i]->GetAttributes().layer_name;
+        Layer *layer=FindLayerByName(layerName,layers);
+        m_entities[i]->SetLayer(layer);
     }
 }
-
+Layer*Block::FindLayerByName(std::string& name,std::vector<Layer*>& layers)
+{
+    for(int i=0;i<layers.size();++i)
+    {
+        if(layers[i]->GetName()==name)
+        {
+            return layers[i];
+            break;
+        }
+    }
+}
 void Block::Scale(double ratio)
 {
     for(int i=0;i<m_entities.size();++i)
     {
-          m_entities[i]->Scale(ratio);
+        m_entities[i]->Scale(ratio);
     }
 }
 
@@ -99,7 +119,7 @@ void Block::Transfer(double dx,double dy,double dz)
 {
     for(int i=0;i<m_entities.size();++i)
     {
-          m_entities[i]->Transfer(dx,dy,dz);
+        m_entities[i]->Transfer(dx,dy,dz);
     }
 }
 
@@ -112,13 +132,13 @@ void Block::CorrectCoord()
 {
     for(int i=0;i<m_entities.size();++i)
     {
-         m_entities[i]->CorrectCoord(m_insertPoint.GetX(),
-                                     m_insertPoint.GetY(),
-                                     m_insertPoint.GetZ(),
-                                     m_scalePoint.GetX(),
-                                     m_scalePoint.GetY(),
-                                     m_scalePoint.GetZ(),
-                                     m_angle);
+        m_entities[i]->CorrectCoord(m_insertPoint.GetX(),
+                                    m_insertPoint.GetY(),
+                                    m_insertPoint.GetZ(),
+                                    m_scalePoint.GetX(),
+                                    m_scalePoint.GetY(),
+                                    m_scalePoint.GetZ(),
+                                    m_angle);
     }
 }
 

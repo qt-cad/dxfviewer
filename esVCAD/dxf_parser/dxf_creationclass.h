@@ -4,6 +4,7 @@
 #include "include/dxf/dl_creationadapter.h"
 #include"entities/block.h"
 #include <entities/rect.h>
+#include <entities/layer.h>
 using namespace Entities;
 
 class Dxf_CreationClass : public DL_CreationAdapter {
@@ -35,11 +36,13 @@ public:
     virtual void endBlock();
 private:
     std::vector<Block*> m_blocks;
+    std::vector<Layer*> m_layers;
     Entities::Attributes m_attributes;
     //bool m_bFindExtMinOrMax;
     std::vector<double> m_extMinAndMax;
 public:
     std::vector<Block*> &GetBlocks() {return m_blocks;}
+    std::vector<Layer*> &GetLayers() {return m_layers;}
     Rect  GetCoordRange();//得到dxf的坐标范围
 private:
     Attributes& GetAttributes();

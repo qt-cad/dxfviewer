@@ -29,12 +29,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::DeleteEntities()
 {
-     std::vector<Block*>::iterator it=m_blocks.begin();
-     for(;it!=m_blocks.end();++it){
-         delete *it;
-         *it=NULL;
-     }
-     m_blocks.clear();
+    DELETE_OBJS(m_blocks);
+    DELETE_OBJS(m_layers);
 }
 
 void MainWindow::ShowEntities(std::vector<Block*> &blocks)
@@ -69,6 +65,7 @@ void MainWindow::ParseDxf(const string &fileName)
     {
         DeleteEntities();
         std::vector<Block*> blocks=dxf_creationClass.GetBlocks();
+        std::vector<Layer*> layers=dxf_creationClass.GetLayers();
         m_coordRange=dxf_creationClass.GetCoordRange();
         //进行坐标转换
         int width=ui->m_graphicsFrame->width();
@@ -86,7 +83,7 @@ void MainWindow::ParseDxf(const string &fileName)
             if(!blocks[i]->IsEmpty()&&blocks[i]->IsUse())
             {
                 Block *block=blocks[i]->Clone();
-                block->Transform(params,5);
+                block->Transform(layers,params,5);
                 m_blocks.push_back(block);
             }
 
@@ -204,13 +201,13 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
         double yScale=m_coordRange.GetHeihgt()/height;
         double scale=std::max(xScale,yScale);
         Point leftTop(m_coordRange.GetLeftTop());
-        double params[4]={scale,height,leftTop.GetX(),leftTop.GetY()};
+        double params[5]={scale,height,leftTop.GetX(),leftTop.GetY(),width};
 
         int count=m_blocks.size();
         for(int i=0;i<count;++i)
         {
             Block *block=m_blocks[i];
-            block->Transform(params,4);
+            block->Transform(m_layers,params,5);
         }
         ui->m_graphicsFrame->PaintEntities(m_blocks);
     }

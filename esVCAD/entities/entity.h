@@ -3,6 +3,7 @@
 #include<string>
 #include<vector>
 #include<QPainter>
+#include<entities/layer.h>
 namespace Entities
 {
 class Entity;
@@ -70,7 +71,7 @@ struct Attributes
 class Entity
 {
 public:
-    Entity(){}
+    Entity():m_layer(NULL),m_drawState(DrawState::Normal){}
     virtual ~Entity(){}
 public:
     virtual EntityType GetType(){return EntityType::BaseType;}
@@ -104,6 +105,10 @@ public:
 protected:
     Attributes  m_attributes;
     DrawState  m_drawState;
+    Layer *m_layer;//图元所属图层
+public:
+    void SetLayer(Layer*layer){m_layer=layer;}
+    Layer* GetLayer()const{return m_layer;}
 };
 
 }

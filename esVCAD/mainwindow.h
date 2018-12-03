@@ -54,6 +54,7 @@ private:
     Ui::MainWindow *ui;
     QString m_sFileName;
     std::vector<Block*>  m_blocks;
+    std::vector<Layer*>  m_layers;
     Rect m_coordRange;
     QPoint m_dragBeginPoint;
     QPoint m_dragEndPoint;

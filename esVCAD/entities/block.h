@@ -66,11 +66,12 @@ public:
 public:
     void Draw(QPainter& painter);
     Block* Clone();
-    void Transform(double*params,int size=9);
+    void Transform(std::vector<Layer*>& layers,double*params,int size=9);
     void Scale(double ratio);
     void Transfer(double dx,double dy,double dz);
     void Rotate(double angle,double cx,double cy,double cz);
-    const std::string  ToString(){return "Block";}
+    const std::string  ToString(){return "Block";}   
+    Layer*FindLayerByName(std::string& name,std::vector<Layer*>& layers);
 };
 
 }

@@ -7,8 +7,10 @@ namespace Entities
 class Layer
 {
 public:
+    Layer();
     Layer(const std::string& name,int flags,bool off);
     ~Layer();
+    Layer(const Layer &layer);
 private:
     /** Layer name. */
     std::string m_name;
@@ -18,8 +20,11 @@ private:
     bool m_off;
 public :
     const std::string & GetName()const {return m_name;}
-    int GetFlags(){return m_flags;}
-    bool IsOff(){return m_off;}
+    int GetFlags()const{return m_flags;}
+    bool IsOff()const{return m_off;}
+    Layer* Clone();
+public:
+    Layer& operator=(const Layer&layer);
 };
 }
 #endif // LAYER_H

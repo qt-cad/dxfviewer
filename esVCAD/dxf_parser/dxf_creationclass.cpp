@@ -24,14 +24,8 @@ Dxf_CreationClass::Dxf_CreationClass()
 
 Dxf_CreationClass::~Dxf_CreationClass()
 {
-    for(int i=0;i<m_blocks.size();++i)
-    {
-        if(m_blocks[i])
-        {
-            delete m_blocks[i];
-            m_blocks[i]=NULL;
-        }
-    }
+    DELETE_OBJS(m_blocks);
+    DELETE_OBJS(m_layers);
 }
 //处理组码
 void Dxf_CreationClass::processCodeValuePair(unsigned int code, const std::string& value)
@@ -60,15 +54,15 @@ void Dxf_CreationClass::endSection()
 
 }
 //图层数据
-void Dxf_CreationClass::addLayer(const DL_LayerData& data) {
-    //printf("LAYER: %s flags: %d\n", data.name.c_str(), data.flags);
-    GetAttributes();
+void Dxf_CreationClass::addLayer(const DL_LayerData& data)
+{
+    Layer *layer=new Layer(data.name,data.flags,data.off);
+    m_layers.push_back(layer);
 }
 
 //点数据
 void Dxf_CreationClass::addPoint(const DL_PointData& data)
 {
-
     int size=m_blocks.size();
     if(size>0)
     {
