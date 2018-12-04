@@ -64,6 +64,8 @@ void Block::Draw(QPainter& painter)
     for(int i=0;i<m_entities.size();++i)
     {
         Layer *layer=m_entities[i]->GetLayer();
+        //没有图层，直接显示图形
+        if(layer==NULL) continue;
         int flags=layer->GetFlags();
         if(!layer->IsOff()
                 ||flags==4
@@ -71,6 +73,7 @@ void Block::Draw(QPainter& painter)
         {
             m_entities[i]->Draw(painter);
         }
+
     }
 }
 

@@ -54,7 +54,7 @@ void GraphicsFrame::wheelEvent(QWheelEvent*event)
 
     }
 }
-void GraphicsFrame::PaintEntities(std::vector<Block*>& blocks,CoordXY &coordXY)
+void GraphicsFrame::PaintEntities(std::vector<Block*>& blocks)
 {
     int width = this->width();
     int height = this->height();
@@ -67,8 +67,6 @@ void GraphicsFrame::PaintEntities(std::vector<Block*>& blocks,CoordXY &coordXY)
         painter.setRenderHint(QPainter::Antialiasing, true);
        //背景黑色,擦除图形
         painter.fillRect(0,0,width,height,QBrush(Qt::black));
-        //绘制坐标系
-        coordXY.Draw(painter);
         //绘制图元
         for(int i=0;i<blocks.size();++i)
         {

@@ -25,7 +25,7 @@ private:
  private:
      QImage m_Image;
  public:
-     void PaintEntities(std::vector<Block*> & blocks,CoordXY &coordXY);
+     void PaintEntities(std::vector<Block*> & blocks);
 };
 
 #endif // GRAPHICSFRAME_H

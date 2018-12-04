@@ -67,19 +67,35 @@ void MainWindow::ParseDxf(const string &fileName)
         DeleteEntities();
         std::vector<Block*> blocks=dxf_creationClass.GetBlocks();
         std::vector<Layer*> layers=dxf_creationClass.GetLayers();
-        m_coordXY=dxf_creationClass.GetCoordRange();
+        CoordXY coordXY=m_coordXY=dxf_creationClass.GetCoordRange();
         //进行坐标转换
         int width=ui->m_graphicsFrame->width();
         int height=ui->m_graphicsFrame->height();
-        double xScale=m_coordXY.GetWidth()/width;
-        double yScale=m_coordXY.GetHeihgt()/height;
+        double xScale=coordXY.GetWidth()/width;
+        double yScale=coordXY.GetHeihgt()/height;
         double scale=std::max(xScale,yScale);
-        Point leftTop(m_coordXY.GetLeftTop());
+        Point leftTop(coordXY.GetLeftTop());
         double params[5]={scale,height,leftTop.GetX(),leftTop.GetY(),width};
 
-        //坐标系变换到窗口坐标系
-        m_coordXY.Transform(params,5);
+        //构造一个block,把坐标系放到里面，接口可以统一
+        Block *coordBlock=new Block;
+        coordBlock->SetName("CoordXY");
+        coordBlock->SetIsUse(true);
 
+        std::string layerName="coord_layer";
+        Layer *coordLayer=new Layer(layerName,0,false);
+        coordXY.SetLayer(coordLayer);
+        m_layers.push_back(coordLayer);
+
+        Attributes attr;
+        attr=coordXY.GetAttributes();
+        attr.layer_name=layerName;
+        coordXY.SetAttributes(attr);
+
+        coordBlock->push_back(coordXY.Clone());
+        coordBlock->Transform(m_layers,params,5);
+        m_blocks.push_back(coordBlock);
+        //构造一个block,把坐标系放到里面，接口可以统一
         //图元变换到窗口坐标系
         for(int i=0;i<layers.size();++i)
         {
@@ -95,8 +111,9 @@ void MainWindow::ParseDxf(const string &fileName)
             }
 
         }
+
         ShowEntities(m_blocks);
-        ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
 
     }
 }
@@ -134,73 +151,67 @@ void MainWindow::on_pushButtonShowEntities_clicked()
 void MainWindow::on_pushButtonMoveRight_clicked()
 {
     int dx=20;
-    m_coordXY.Transfer(dx,0.0,0.0);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Transfer(dx,0.0,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveLeft_clicked()
 {
     int dx=-20;
-    m_coordXY.Transfer(dx,0.0,0.0);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Transfer(dx,0.0,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveUp_clicked()
 {
     int dy=-20;
-    m_coordXY.Transfer(0.0,dy,0.0);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Transfer(0.0,dy,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonMoveDown_clicked()
 {
     int dy=20;
-    m_coordXY.Transfer(0.0,dy,0.0);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Transfer(0.0,dy,0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonZoomOut_clicked()
 {
     double scale=2;
-    m_coordXY.Scale(scale);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Scale(scale);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::on_pushButtonZoomIn_clicked()
 {
     double scale=0.5;
-    m_coordXY.Scale(scale);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
         m_blocks[i]->Scale(scale);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
@@ -222,7 +233,7 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
             Block *block=m_blocks[i];
             block->Transform(m_layers,params,5);
         }
-        ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
     }
 
 }
@@ -240,7 +251,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         {
             m_blocks[i]->Transfer(dx,dy,0.0);
         }
-        ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+        ui->m_graphicsFrame->PaintEntities(m_blocks);
         m_dragBeginPoint=m_dragEndPoint;
     }
 }
@@ -271,9 +282,6 @@ void MainWindow::wheelEvent(QWheelEvent*event)
     {
         scale=0.9;
     }
-    m_coordXY.Transfer(-m_scaleBasePoint.x(),-m_scaleBasePoint.y(),0.0);
-    m_coordXY.Scale(scale);
-    m_coordXY.Transfer(m_scaleBasePoint.x(),m_scaleBasePoint.y(),0.0);
     int count=m_blocks.size();
     for(int i=0;i<count;++i)
     {
@@ -281,7 +289,7 @@ void MainWindow::wheelEvent(QWheelEvent*event)
         m_blocks[i]->Scale(scale);
         m_blocks[i]->Transfer(m_scaleBasePoint.x(),m_scaleBasePoint.y(),0.0);
     }
-    ui->m_graphicsFrame->PaintEntities(m_blocks,m_coordXY);
+    ui->m_graphicsFrame->PaintEntities(m_blocks);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
