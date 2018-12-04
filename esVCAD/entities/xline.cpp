@@ -78,17 +78,26 @@ void XLine::ExportXLine()
     }
     else
     {
-        //待处理
-        double k=0.0;
+        double k=-m_dirVector.GetY()/m_dirVector.GetX();
         double baseX=m_basePoint.GetDrawableX();
         double baseY=m_basePoint.GetDrawableY();
-        k=-dy/dx;
         double b=baseY-k*baseX;
         //y=kx+b
-        m_drawablePoint1.SetDrawableX(-(b+1)/k);
-        m_drawablePoint1.SetDrawableY(-1);
-        m_drawablePoint2.SetDrawableX(-1);
-        m_drawablePoint2.SetDrawableY(m_yMax);
+        if(k<0)
+        {
+            m_drawablePoint1.SetDrawableX(0);
+            m_drawablePoint1.SetDrawableY(b);
+            m_drawablePoint2.SetDrawableX(-b/k);
+            m_drawablePoint2.SetDrawableY(0);
+        }
+        else
+        {
+            m_drawablePoint1.SetDrawableX(0);
+            m_drawablePoint1.SetDrawableY(b);
+            m_drawablePoint2.SetDrawableX((m_yMax-b)/k);
+            m_drawablePoint2.SetDrawableY(m_yMax);
+        }
+
     }
 }
 

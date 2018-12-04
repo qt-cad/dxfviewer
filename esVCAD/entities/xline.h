@@ -14,7 +14,7 @@ public:
 protected:
     Point m_basePoint;
     Point m_dirVector;//直线方向
-private:
+protected:
     Point m_drawablePoint1;
     Point m_drawablePoint2;
     double m_xMax;

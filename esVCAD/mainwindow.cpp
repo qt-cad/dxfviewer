@@ -143,11 +143,6 @@ void MainWindow::on_pushButtonDxfParse_clicked()
     }
 }
 
-void MainWindow::on_pushButtonShowEntities_clicked()
-{
-
-}
-
 void MainWindow::on_pushButtonMoveRight_clicked()
 {
     int dx=20;
@@ -273,6 +268,8 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 }
 void MainWindow::wheelEvent(QWheelEvent*event)
 {
+    //以鼠标当前位置为基点进行比例变换
+    m_scaleBasePoint=event->pos();
     double scale=0.9;
     if(event->delta()>0)
     {

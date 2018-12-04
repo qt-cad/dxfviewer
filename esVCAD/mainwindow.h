@@ -26,7 +26,6 @@ private slots:
 
     void on_pushButtonDxfParse_clicked();
 
-    void on_pushButtonShowEntities_clicked();
 
     void on_pushButtonMoveRight_clicked();
 
