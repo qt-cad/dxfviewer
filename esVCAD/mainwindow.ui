@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1384</width>
-    <height>791</height>
+    <width>1377</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,9 +49,9 @@
    <widget class="GraphicsFrame" name="m_graphicsFrame">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>10</y>
-      <width>1181</width>
+      <width>1191</width>
       <height>711</height>
      </rect>
     </property>
@@ -159,20 +159,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1384</width>
+     <width>1377</width>
      <height>26</height>
     </rect>
    </property>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

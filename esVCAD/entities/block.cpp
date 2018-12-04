@@ -85,7 +85,6 @@ Block* Block::Clone()
 
 void Block::Transform(std::vector<Layer*>& layers,double*params,int size)
 {
-    m_scalePoint.Transform(params,size);
     for(int i=0;i<m_entities.size();++i)
     {
         std::string layerName=m_entities[i]->GetAttributes().layer_name;

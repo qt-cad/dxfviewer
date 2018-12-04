@@ -1,4 +1,5 @@
 #include "coordxy.h"
+#define RECT_SIZE 10
 namespace Entities
 {
 
@@ -35,26 +36,31 @@ CoordXY::CoordXY(const CoordXY& coordXY)
 
 void CoordXY::Draw(QPainter& painter)
 {
+
+    int centerX=m_origin.GetDrawableX();
+    int centerY=m_origin.GetDrawableY();
+    if(centerX<RECT_SIZE) centerX=RECT_SIZE;
+    if(centerY<RECT_SIZE) centerY=RECT_SIZE;
+    if(centerX>=m_maxX-RECT_SIZE) centerX=m_maxX-RECT_SIZE;
+    if(centerY>=m_maxY-RECT_SIZE) centerY=m_maxY-RECT_SIZE;
+
     QPen pen;
     pen.setColor(Qt::white);
     pen.setWidth(2);
     pen.setStyle(Qt::SolidLine);
     painter.setPen(pen);
 
-    int centerX=m_origin.GetDrawableX();
-    int centerY=m_origin.GetDrawableY();
 
-
-    pen.setColor(Qt::red);
+    pen.setColor(Qt::green);
     painter.setPen(pen);
     painter.drawLine(centerX,centerY,centerX,0);
-    pen.setColor(Qt::green);
+    pen.setColor(Qt::red);
     painter.setPen(pen);
     painter.drawLine(centerX,centerY,m_maxX,centerY);
 
     pen.setColor(Qt::blue);
     painter.setPen(pen);
-    QRect rect(centerX-10,centerY-10,20,20);
+    QRect rect(centerX-RECT_SIZE,centerY-RECT_SIZE,RECT_SIZE<<1,RECT_SIZE<<1);
     painter.drawRect(rect);
 
     pen.setColor(Qt::white);
